@@ -242,8 +242,9 @@ $CAKE_EXE_INVOCATION = if ($IsLinux -or $IsMacOS) {
 
 
 # Build Cake arguments
-$cakeArguments = @("$Script");
+$cakeArguments = @($Script.Replace("-target", "--target"));
 if ($Target) { $cakeArguments += "--target=$Target" }
+if ($Configuration) { $cakeArguments += "--configuration=$Configuration" }
 if ($Verbosity) { $cakeArguments += "--verbosity=$Verbosity" }
 if ($ShowDescription) { $cakeArguments += "--showdescription" }
 if ($DryRun) { $cakeArguments += "--dryrun" }
