@@ -243,11 +243,11 @@ $CAKE_EXE_INVOCATION = if ($IsLinux -or $IsMacOS) {
 
 # Build Cake arguments
 $cakeArguments = @("$Script");
-if ($Target) { $cakeArguments += "-target=$Target" }
-if ($Configuration) { $cakeArguments += "-configuration=$Configuration" }
-if ($Verbosity) { $cakeArguments += "-verbosity=$Verbosity" }
-if ($ShowDescription) { $cakeArguments += "-showdescription" }
-if ($DryRun) { $cakeArguments += "-dryrun" }
+if ($Target) { $cakeArguments += "--target=$Target" }
+if ($Configuration) { $cakeArguments += "--configuration=$Configuration" }
+if ($Verbosity) { $cakeArguments += "--verbosity=$Verbosity" }
+if ($ShowDescription) { $cakeArguments += "--showdescription" }
+if ($DryRun) { $cakeArguments += "--dryrun" }
 $cakeArguments += $ScriptArgs
 
 # Start Cake
