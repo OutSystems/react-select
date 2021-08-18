@@ -1,7 +1,6 @@
 trigger:
-  branches:
-    include:
-    - main
+- main
+pr: none
 
 variables:
   SourcesDirectory: '$(Build.SourcesDirectory)'
