@@ -18,41 +18,67 @@ class ScrollCaptor extends Component<CaptorProps> {
   scrollTarget: HTMLElement;
   touchStart: number;
 
+  // Scroll element previous state variables
+  previousScrollTop: number = 0;
+  previousScrollHeight: number = 0;
+  previousClientHeight: number = 0;
+
+  // Event listener flags
+  listeningToScroll: boolean = false;
+  listeningToTouchStart: boolean = false;
+  listeningToTouchMove: boolean = false;
+
   componentDidMount() {
-    this.startListening(this.scrollTarget);
+    this.previousScrollHeight = this.scrollTarget.scrollHeight;
+    this.previousClientHeight = this.scrollTarget.previousClientHeight;
+    this.refreshListening(this.scrollTarget);
   }
+
+  componentDidUpdate() {
+    if (this.previousScrollHeight !== this.scrollTarget.scrollHeight || this.previousClientHeight !== this.scrollTarget.clientHeight) {
+      this.previousScrollHeight = this.scrollTarget.scrollHeight;
+      this.previousClientHeight = this.scrollTarget.clientHeight;
+      this.refreshListening(this.scrollTarget);
+    }
+  }
+
   componentWillUnmount() {
     this.stopListening(this.scrollTarget);
   }
-  startListening(el: HTMLElement) {
+  refreshListening(el: HTMLElement) {
     // bail early if no scroll available
-    if (!el) return;
-    if (el.scrollHeight <= el.clientHeight) return;
+    if (!el || el.scrollHeight <= el.clientHeight)  {
+      this.stopListening(el);
+      return;
+    }
 
     // all the if statements are to appease Flow 😢
-    if (typeof el.addEventListener === 'function') {
-      el.addEventListener('wheel', this.onWheel, false);
+    if (typeof el.addEventListener === 'function' &&  !this.listeningToScroll) {
+      el.addEventListener('scroll', this.onScroll, false);
+      this.listeningToScroll = true;
     }
-    if (typeof el.addEventListener === 'function') {
+    if (typeof el.addEventListener === 'function' && !this.listeningToScroll) {
       el.addEventListener('touchstart', this.onTouchStart, false);
+      this.listeningToTouchStart = true;
     }
-    if (typeof el.addEventListener === 'function') {
+    if (typeof el.addEventListener === 'function' && !this.listeningToScroll) {
       el.addEventListener('touchmove', this.onTouchMove, false);
+      this.listeningToTouchMove = true;
     }
   }
   stopListening(el: HTMLElement) {
-    // bail early if no scroll available
-    if (el.scrollHeight <= el.clientHeight) return;
-
     // all the if statements are to appease Flow 😢
-    if (typeof el.removeEventListener === 'function') {
-      el.removeEventListener('wheel', this.onWheel, false);
+    if (this.listeningToScroll) {
+      el.removeEventListener('scroll', this.onScroll, false);
+      this.listeningToScroll = false;
     }
-    if (typeof el.removeEventListener === 'function') {
+    if (this.listeningToTouchStart) {
       el.removeEventListener('touchstart', this.onTouchStart, false);
+      this.listeningToTouchStart = false;
     }
-    if (typeof el.removeEventListener === 'function') {
+    if (this.listeningToTouchMove) {
       el.removeEventListener('touchmove', this.onTouchMove, false);
+      this.listeningToTouchMove = false;
     }
   }
 
@@ -108,8 +134,10 @@ class ScrollCaptor extends Component<CaptorProps> {
     }
   };
 
-  onWheel = (event: SyntheticWheelEvent<HTMLElement>) => {
-    this.handleEventDelta(event, event.deltaY);
+  onScroll = (event: SyntheticWheelEvent<HTMLElement>) => {
+    const deltaY = event.currentTarget.scrollTop - this.previousScrollTop;
+    this.previousScrollTop = event.currentTarget.scrollTop;
+    this.handleEventDelta(event, deltaY);
   };
   onTouchStart = (event: SyntheticTouchEvent<HTMLElement>) => {
     // set touch start so we can calculate touchmove delta
