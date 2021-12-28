@@ -134,7 +134,7 @@ class ScrollCaptor extends Component<CaptorProps> {
     }
   };
 
-  onScroll = (event: SyntheticWheelEvent<HTMLElement>) => {
+  onScroll = (event: SyntheticEvent<HTMLElement>) => {
     const deltaY = event.currentTarget.scrollTop - this.previousScrollTop;
     this.previousScrollTop = event.currentTarget.scrollTop;
     this.handleEventDelta(event, deltaY);
