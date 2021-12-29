@@ -46,22 +46,22 @@ class ScrollCaptor extends Component<CaptorProps> {
     this.stopListening(this.scrollTarget);
   }
   refreshListening(el: HTMLElement) {
-    // bail early if no scroll available
-    if (!el || el.scrollHeight <= el.clientHeight)  {
+    // bail early if no scroll available or already listening to all events
+    if (!el || el.scrollHeight <= el.clientHeight || (this.listeningToScroll && this.listeningToTouchStart && this.listeningToTouchMove))  {
       this.stopListening(el);
       return;
     }
 
     // all the if statements are to appease Flow 😢
-    if (typeof el.addEventListener === 'function' &&  !this.listeningToScroll) {
+    if (typeof el.addEventListener === 'function' && !this.listeningToScroll) {
       el.addEventListener('scroll', this.onScroll, false);
       this.listeningToScroll = true;
     }
-    if (typeof el.addEventListener === 'function' && !this.listeningToScroll) {
+    if (typeof el.addEventListener === 'function' && !this.listeningToTouchStart) {
       el.addEventListener('touchstart', this.onTouchStart, false);
       this.listeningToTouchStart = true;
     }
-    if (typeof el.addEventListener === 'function' && !this.listeningToScroll) {
+    if (typeof el.addEventListener === 'function' && !this.listeningToTouchMove) {
       el.addEventListener('touchmove', this.onTouchMove, false);
       this.listeningToTouchMove = true;
     }
