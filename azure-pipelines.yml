@@ -19,7 +19,7 @@ stages:
   jobs:
   - job: Build
     displayName: 'Build Job'
-    timeoutInMinutes: 8
+    timeoutInMinutes: 30
     pool:
       vmImage: 'windows-latest'
     steps:
@@ -65,7 +65,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: 'Deploy to npm private repository and creates a git release'
-    timeoutInMinutes: 8
+    timeoutInMinutes: 30
     pool:
       vmImage: 'windows-latest'
     environment: Automatic-Release
