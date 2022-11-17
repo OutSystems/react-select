@@ -579,8 +579,10 @@ export default class Select extends Component<Props, State> {
       return;
     }
 
+    this.scrollToFocusedOptionOnUpdate = true;
     this.setState({
       focusedOption: optionToFocus,
+      focusedValue: null
     })
   }
 
