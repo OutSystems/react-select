@@ -574,13 +574,13 @@ export default class Select extends Component<Props, State> {
        return;
     }
 
-    let index = options.findIndex(e => e.label == opt);
-    if(index == -1) {
+    let optionToFocus = options.find(e => e.label == opt);
+    if(!optionToFocus) {
       return;
     }
 
     this.setState({
-      focusedOption: options[index],
+      focusedOption: optionToFocus,
     })
   }
 
