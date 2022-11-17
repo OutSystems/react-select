@@ -562,27 +562,23 @@ export default class Select extends Component<Props, State> {
     });
   }
 
-  changeFocusedOption(opt: string){
-    if(opt == null){
+  changeFocusedOption(opt: string) {
+    if(opt == null) {
        return;
     }
+
     const { menuOptions } = this.state;
     const options = menuOptions.focusable;
     
-    if(!options.length){
+    if(!options.length) {
        return;
     }
-    let index = -1;
-    let i = 0;
-    for(i = 0; i < options.length; i++){
-      if(options[i].label == opt){
-        index = i;
-        break;
-      }
-    }
-    if(index == -1){
+
+    let index = options.findIndex(e => e.label == opt);
+    if(index == -1) {
       return;
     }
+
     this.setState({
       focusedOption: options[index],
     })
