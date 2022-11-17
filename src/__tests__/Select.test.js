@@ -5,6 +5,7 @@ import cases from 'jest-in-case';
 
 import {
   OPTIONS,
+  OPTIONS_INVERTED_SIMILAR,
   OPTIONS_NUMBER_VALUE,
   OPTIONS_BOOLEAN_VALUE,
   OPTIONS_DISABLED
@@ -39,6 +40,17 @@ const BASIC_PROPS = {
   options: OPTIONS,
 };
 
+const INVERTED_PROPS = {
+  className: 'react-select',
+  classNamePrefix: 'react-select',
+  onChange: jest.fn(),
+  onInputChange: jest.fn(),
+  onMenuClose: jest.fn(),
+  onMenuOpen: jest.fn(),
+  name: 'test-input-name',
+  options: OPTIONS_INVERTED_SIMILAR,
+};
+
 test('snapshot - defaults', () => {
   const tree = shallow(<Select />);
   expect(toJson(tree)).toMatchSnapshot();
@@ -70,6 +82,14 @@ test('single select > passing multiple values > should select the first value', 
   const props = { ...BASIC_PROPS, value: [OPTIONS[0], OPTIONS[4]] };
   let selectWrapper = mount(<Select {...props} />);
   expect(selectWrapper.find(Control).text()).toBe('0');
+});
+
+test('single select > should focus exact match', () => {
+  const props = { ...INVERTED_PROPS, value: [OPTIONS[0], OPTIONS[4]] };
+  let selectWrapper = mount(<Select {...props} />);
+  selectWrapper.instance().changeFocusedOption("tw");
+  const opt = selectWrapper.instance().state.focusedOption;
+  expect(opt.label).toBe('tw');
 });
 
 test('isRtl boolean props is passed down to the control component', () => {
