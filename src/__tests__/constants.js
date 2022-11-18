@@ -20,6 +20,27 @@ export const OPTIONS = [
   { label: '16', value: 'sixteen' },
 ];
 
+export const OPTIONS_INVERTED_SIMILAR = [
+  { label: 'zero', value: '0' },
+  { label: 'one', value: '1' },
+  { label: 'two', value: '2' },
+  { label: "tw", value: '22'},
+  { label: 'three', value: '3' },
+  { label: 'four', value: '4' },
+  { label: 'five', value: '5' },
+  { label: 'six', value: '6' },
+  { label: 'seven', value: '7' },
+  { label: 'eight', value: '8' },
+  { label: 'nine', value: '9' },
+  { label: 'ten', value: '10' },
+  { label: 'eleven', value: '11' },
+  { label: 'twelve', value: '12' },
+  { label: 'thirtee', value: '13' },
+  { label: 'fourteen', value: '14' },
+  { label: 'fifteen', value: '15' },
+  { label: 'sixteen', value: '16' },
+];
+
 export const OPTIONS_DISABLED = [
   { label: '0', value: 'zero' },
   { label: '1', value: 'one', isDisabled: true },

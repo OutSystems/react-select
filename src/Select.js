@@ -562,6 +562,30 @@ export default class Select extends Component<Props, State> {
     });
   }
 
+  changeFocusedOption(opt: string) {
+    if(opt == null) {
+       return;
+    }
+
+    const { menuOptions } = this.state;
+    const options = menuOptions.focusable;
+    
+    if(!options.length) {
+       return;
+    }
+
+    const optionToFocus = options.find(e => e.label == opt);
+    if(!optionToFocus) {
+      return;
+    }
+
+    this.scrollToFocusedOptionOnUpdate = true;
+    this.setState({
+      focusedOption: optionToFocus,
+      focusedValue: null
+    })
+  }
+
   focusOption(direction: FocusDirection = 'first') {
     const { pageSize } = this.props;
     const { focusedOption, menuOptions } = this.state;
