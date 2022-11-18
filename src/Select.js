@@ -574,7 +574,7 @@ export default class Select extends Component<Props, State> {
        return;
     }
 
-    let optionToFocus = options.find(e => e.label == opt);
+    const optionToFocus = options.find(e => e.label == opt);
     if(!optionToFocus) {
       return;
     }
