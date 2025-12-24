@@ -138,5 +138,5 @@
   },
   "sideEffects": false,
   "typings": "types/index.d.ts",
-  "version": "2.4.2-os24"
+  "version": "2.4.2-os25"
 }

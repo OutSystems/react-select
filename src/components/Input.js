@@ -40,18 +40,26 @@ const Input = ({
   isHidden,
   isDisabled,
   theme,
+  onChange,
   selectProps,
   ...props
-}: InputProps) => (
-  <div style={getStyles('input', { theme, ...props })}>
-    <AutosizeInput
-      className={cx(null, { 'input': true }, className)}
-      inputRef={innerRef}
-      inputStyle={inputStyle(isHidden)}
-      disabled={isDisabled}
-      {...props}
-    />
-  </div>
-);
+}: InputProps) => {
+  const onInputChange = (event) => {
+    onChange(event.currentTarget.value);
+  }
+
+  return (
+    <div style={getStyles('input', { theme, ...props })}>
+      <AutosizeInput
+        {...props}
+        className={cx(null, { 'input': true }, className)}
+        inputRef={innerRef}
+        inputStyle={inputStyle(isHidden)}
+        disabled={isDisabled}
+        onChange={onInputChange}
+      />
+    </div>
+  );
+};
 
 export default Input;
