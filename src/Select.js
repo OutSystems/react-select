@@ -1112,8 +1112,8 @@ export default class Select extends Component<Props, State> {
   // Focus Handlers
   // ==============================
 
-  handleInputChange = (event: SyntheticKeyboardEvent<HTMLInputElement>) => {
-    const inputValue = event.currentTarget.value;
+  handleInputChange = (value: string) => {
+    const inputValue = value;
     this.inputIsHiddenAfterUpdate = false;
     this.onInputChange(inputValue, { action: 'input-change' });
     this.onMenuOpen();
